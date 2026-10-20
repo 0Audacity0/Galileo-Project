@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schooling Project muahhahahahaha</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #05050a;
+            color: #ffffff;
+        }
+
+        /* Screen 1: Introduction */
+        #intro-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+            z-index: 10;
+            transition: opacity 1s ease;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #intro-screen h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #f1f5f9;
+            letter-spacing: 2px;
+        }
+
+        #intro-screen p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+
+        .telescope-clickable {
+            width: 250px;
+            height: 250px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .telescope-clickable:hover {
+            transform: scale(1.08) rotate(-2deg);
+        }
+
+        /* Screen 2: Space Exploration */
+        #space-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+            background-color: #020205;
+            overflow: hidden;
+        }
+
+        #space-screen.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Starfield Background */
+        .star {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+        }
+
+        /* Floating Facts - Sharp edges & Transparent Gray */
+        .fact-card {
+            position: absolute;
+            background: rgba(40, 40, 50, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 15px 20px;
+            border-radius: 0px; /* Sharp corners */
+            max-width: 280px;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            cursor: grab;
+            z-index: 2;
+        }
+
+        .fact-card:active {
+            cursor: grabbing;
+            background: rgba(60, 60, 70, 0.7);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+
+        .fact-card strong {
+            color: #38bdf8;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.05rem;
+        }
+
+        /* Smooth Spotlight Overlay */
+        #spotlight-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            background: radial-gradient(circle 180px at 50% 50%, transparent 100%, rgba(2, 2, 5, 0.96) 100%);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+/* DVD Button Styles */
+#dvd-button {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    width: 65px;
+    height: 65px;
+    z-index: 20;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#dvd-button:hover {
+    transform: scale(1.1) rotate(15deg);
+}
+
+.dvd-disc {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    /* Creates a silver metallic disc look with CD reflections */
+    background: radial-gradient(circle, 
+        #333 0%, #333 12%, 
+        #888 13%, #bbb 20%, 
+        #ddd 40%, #bbb 60%, 
+        #888 85%, #555 100%
+    );
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255,255,255,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The clear center hole of a DVD */
+.dvd-center {
+    width: 16px;
+    height: 16px;
+    background-color: #0f172a; /* Matches the background behind it */
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.8);
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: INTRO -->
+    <div id="intro-screen">
+        <h1>My SUPER DUPER COOL Galileo School Project™</h1>
+        <p>(Incase I, Matthew Rodney Bryan JR, forgot how to use my own project, click the telescope.)</p>
+        
+        <!-- Remodeled Remade Detailed Galileo Telescope Graphic -->
+        <svg class="telescope-clickable" id="start-btn" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Outer Glow/Ring -->
+            <circle cx="100" cy="100" r="90" stroke="rgba(56, 189, 248, 0.2)" stroke-width="1" stroke-dasharray="4 4" />
+            
+            <!-- Tripod Mount Platform -->
+            <path d="M90 125 L110 125 L105 135 L95 135 Z" fill="#475569"/>
+            
+            <!-- Tripod Legs -->
+            <path d="M96 135 L60 190 L65 192 L98 135 Z" fill="#64748b"/>
+            <path d="M104 135 L140 190 L135 192 L102 135 Z" fill="#64748b"/>
+            <path d="M100 135 L100 195 L98 195 L98 135 Z" fill="#475569"/>
+            
+            <!-- Telescope Main Leather-Wrapped Body Cylinder -->
+            <g transform="rotate(-25 100 100)">
+                <!-- Main Long Tube -->
+                <rect x="50" y="90" width="105" height="18" fill="#78350f" stroke="#451a03" stroke-width="1.5"/>
+                <!-- Leather Accent Ribbons / Rings -->
+                <rect x="75" y="89.5" width="6" height="19" fill="#ca8a04"/>
+                <rect x="115" y="89.5" width="6" height="19" fill="#ca8a04"/>
+                
+                <!-- Objective Lens Cap/Rim (Front/Right) -->
+                <path d="M155 87 L163 87 L163 111 L155 111 Z" fill="#ca8a04" stroke="#854d0e" stroke-width="1"/>
+                <!-- Front Glass Glow -->
+                <path d="M163 89 L165 91 L165 107 L163 109 Z" fill="#38bdf8" opacity="0.7"/>
+                
+                <!-- Eyepiece Drawtube (Back/Left) -->
+                <rect x="32" y="94" width="18" height="10" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+                <rect x="22" y="92" width="10" height="14" fill="#ca8a04" stroke="#854d0e" stroke-width="1"/>
+                <!-- Small Eyepiece lens end -->
+                <circle cx="22" cy="99" r="3" fill="#0f172a"/>
+            </g>
+            
+            <!-- Brass Mounting Hardware Joint -->
+            <circle cx="100" cy="112" r="5" fill="#eab308" stroke="#ca8a04" stroke-width="1"/>
+        </svg>
+    <!-- DVD Link Button -->
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1" target="_blank" id="dvd-button" title="Watch Video">
+        <div class="dvd-disc">
+            <div class="dvd-center"></div>
+        </div>
+    </a>   
+ </div>
+
+    <!-- SCREEN 2: OUTER SPACE -->
+    <div id="space-screen">
+        <div id="spotlight-overlay"></div>
+    </div>
+
+    <script>
+        const introScreen = document.getElementById('intro-screen');
+        const spaceScreen = document.getElementById('space-screen');
+        const startBtn = document.getElementById('start-btn');
+        const spotlight = document.getElementById('spotlight-overlay');
+
+        const facts = [
+            { title: "The Power", text: "Galileo didn't invent the telescope, but his 1609 improvements boosted magnification power from a mere 3x to an incredible 30x." },
+            { title: "The Optics", text: "His design featured a convex objective lens and a concave eyepiece lens, a combination known today as a Galilean telescope." },
+            { title: "Moons of Jupiter", text: "In 1610, Galileo discovered Io, Europa, Ganymede, and Callisto, proving that not everything in the universe revolved around the Earth." },
+            { title: "Phases of Venus", text: "Using his improved glass, he tracked Venus changing shapes over time, confirming it directly orbits the Sun, not Earth." },
+            { title: "The Moon's Surface", text: "Instead of a perfectly smooth celestial sphere, Galileo discovered the Moon was rough, uneven, and filled with deep craters." },
+            { title: "Sunspots", text: "He observed dark moving spots on the Sun, deducing that the Sun rotates on its own axis and changes over time." }
+        ];
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let spotX = window.innerWidth / 2;
+        let spotY = window.innerHeight / 2;
+        const delayFactor = 0.08; 
+
+        let draggedCard = null;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        function createStars() {
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 2.5;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.opacity = Math.random() * 0.8 + 0.2;
+                spaceScreen.appendChild(star);
+            }
+        }
+
+        const activeCards = [];
+        function createFactCards() {
+            facts.forEach((fact, index) => {
+                const card = document.createElement('div');
+                card.className = 'fact-card';
+                card.innerHTML = `<strong>${fact.title}</strong>${fact.text}`;
+                
+                const padding = 120;
+                const posX = padding + Math.random() * (window.innerWidth - padding * 3);
+                const posY = padding + Math.random() * (window.innerHeight - padding * 3);
+                card.style.left = `${posX}px`;
+                card.style.top = `${posY}px`;
+
+                spaceScreen.appendChild(card);
+
+                const physicsData = {
+                    element: card,
+                    x: posX,
+                    y: posY,
+                    vx: (Math.random() - 0.5) * 0.35, 
+                    vy: (Math.random() - 0.5) * 0.35
+                };
+
+                activeCards.push(physicsData);
+
+                card.addEventListener('mousedown', (e) => {
+                    draggedCard = physicsData;
+                    activeCards.forEach(c => c.element.style.zIndex = 2);
+                    card.style.zIndex = 3;
+                    
+                    offsetX = e.clientX - card.offsetLeft;
+                    offsetY = e.clientY - card.offsetTop;
+                    
+                    physicsData.vx = 0;
+                    physicsData.vy = 0;
+                });
+            });
+        }
+
+        function updatePhysics() {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+
+            activeCards.forEach(card => {
+                if (card === draggedCard) {
+                    card.x = mouseX - offsetX;
+                    card.y = mouseY - offsetY;
+                } else {
+                    card.x += card.vx;
+                    card.y += card.vy;
+
+                    if (card.x <= 15 || card.x >= w - 300) card.vx *= -1;
+                    if (card.y <= 15 || card.y >= h - 160) card.vy *= -1;
+                }
+
+                card.element.style.left = `${card.x}px`;
+                card.element.style.top = `${card.y}px`;
+            });
+
+            spotX += (mouseX - spotX) * delayFactor;
+            spotY += (mouseY - spotY) * delayFactor;
+            spotlight.style.background = `radial-gradient(circle 180px at ${spotX}px ${spotY}px, transparent 100%, rgba(2, 2, 5, 0.96) 100%)`;
+
+            requestAnimationFrame(updatePhysics);
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (draggedCard) {
+                draggedCard.vx = (Math.random() - 0.5) * 0.35;
+                draggedCard.vy = (Math.random() - 0.5) * 0.35;
+                draggedCard = null;
+            }
+        });
+
+        startBtn.addEventListener('click', () => {
+            introScreen.style.opacity = '0';
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                spaceScreen.classList.add('active');
+                
+                createStars();
+                createFactCards();
+                requestAnimationFrame(updatePhysics);
+            }, 1000);
+        });
+
+        window.addEventListener('resize', () => {
+            if(!spaceScreen.classList.contains('active')) return;
+            activeCards.forEach(card => {
+                if (card.x > window.innerWidth - 300) card.x = window.innerWidth - 300;
+                if (card.y > window.innerHeight - 160) card.y = window.innerHeight - 160;
+            });
+        });
+    </script>
+</body>
+</html>
